@@ -31,7 +31,7 @@ function UpdatePost() {
 
     const fetchPostData = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/blog/view/${Id}`);
+            const response = await fetch(`https://gourav-saini.vercel.app/blog/view/${Id}`);
             if (response.ok) {
                 const postData = await response.json();
                 setFormData({
@@ -59,7 +59,7 @@ function UpdatePost() {
             postData.append('file', formData.file);
             postData.append('id', id);
 
-            const response = await fetch(`http://localhost:8000/blog/updateblog/${Id}`, {
+            const response = await fetch(`https://gourav-saini.vercel.app/blog/updateblog/${Id}`, {
                 method: 'PATCH',
                 body: postData
             });

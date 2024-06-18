@@ -21,7 +21,7 @@ function Signin() {
         e.preventDefault();
         // console.log("button clicked")
         try {
-            const response = await fetch('http://localhost:8000/user/signup', {
+            const response = await fetch('https://gourav-saini.vercel.app/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

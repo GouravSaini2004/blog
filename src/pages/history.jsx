@@ -19,7 +19,7 @@ function History() {
         
         try {
           setLoading(true)
-          const response = await fetch(`http://localhost:8000/user/history/${Id}`);
+          const response = await fetch(`https://gourav-saini.vercel.app/user/history/${Id}`);
           if (!response.ok) {
             throw new Error('Failed to fetch users');
           }

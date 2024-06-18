@@ -22,7 +22,7 @@ function Home() {
   const fetchUsers = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:8000');
+      const response = await fetch('https://gourav-saini.vercel.app');
       if (!response.ok) {
         throw new Error('Failed to fetch users');
       }
@@ -50,7 +50,7 @@ function Home() {
     const data = {
       additionalVariable: additionalVariable
     };
-    fetch(`http://localhost:8000/user/history/${userid}`, {
+    fetch(`https://gourav-saini.vercel.app/user/history/${userid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ function Home() {
         console.error('There was a problem with your fetch operation:', error);
       });
 
-    fetch(`http://localhost:8000/blog/count/${userid}`, {
+    fetch(`https://gourav-saini.vercel.app/blog/count/${userid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

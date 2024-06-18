@@ -30,7 +30,7 @@ function View() {
         const fetchData = async () => {
             try {
                 // setLoading(true)
-                const response = await fetch(`http://localhost:8000/blog/view/${Id}`);
+                const response = await fetch(`https://gourav-saini.vercel.app//blog/view/${Id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -66,7 +66,7 @@ function View() {
     const fetchUsers = async () => {
         try {
             // setLoading(true)
-            const response = await fetch('http://localhost:8000');
+            const response = await fetch('https://gourav-saini.vercel.app');
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
@@ -96,7 +96,7 @@ function View() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8000/blog/comment/${Id}`, {
+            const response = await fetch(`https://gourav-saini.vercel.app/blog/comment/${Id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ function View() {
         console.log("button click")
 
         try {
-            const response = await fetch(`http://localhost:8000/blog/deleteblog/${Id}`, {
+            const response = await fetch(`https://gourav-saini.vercel.app/blog/deleteblog/${Id}`, {
                 method: 'DELETE'
             });
 
@@ -148,7 +148,7 @@ function View() {
         // console.log(postid);
         // console.log("click like")
 
-        fetch(`http://localhost:8000/blog/like/${Id}`, {
+        fetch(`https://gourav-saini.vercel.app/blog/like/${Id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -174,7 +174,7 @@ function View() {
             // const postid = blog._id
             try {
                 // setLoading(true)
-                const response = await fetch(`http://localhost:8000/blog/like/${Id}`);
+                const response = await fetch(`https://gourav-saini.vercel.app/blog/like/${Id}`);
                 // console.log(postid)
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
@@ -200,7 +200,7 @@ function View() {
         const data = {
             additionalVariable: additionalVariable
         };
-        fetch(`http://localhost:8000/user/history/${userid}`, {
+        fetch(`https://gourav-saini.vercel.app/user/history/${userid}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -220,7 +220,7 @@ function View() {
                 console.error('There was a problem with your fetch operation:', error);
             });
 
-        fetch(`http://localhost:8000/blog/count/${Id}`, {
+        fetch(`https://gourav-saini.vercel.app/blog/count/${Id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -245,7 +245,7 @@ function View() {
         const fetchData = async () => {
             // const postid = blog._id
             try {
-                const response = await fetch(`http://localhost:8000/blog/count/${Id}`);
+                const response = await fetch(`https://gourav-saini.vercel.app/blog/count/${Id}`);
                 // console.log(postid)
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');

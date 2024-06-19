@@ -14,7 +14,7 @@ function Allblog() {
         const Id = Cookies.get('_id');
         setLoding(true)
         try {
-            const response = await fetch(`https://gourav-saini.vercel.app/blog/allblog/${Id}`);
+            const response = await fetch(`https://gourav-saini-q37q.vercel.app/blog/allblog/${Id}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }

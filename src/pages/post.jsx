@@ -37,7 +37,7 @@ function AddPost() {
             postData.append('file', formData.file);
             postData.append('id', id);
 
-            const response = await fetch('https://gourav-saini.vercel.app/blog/addblog', {
+            const response = await fetch('https://gourav-saini-q37q.vercel.app/blog/addblog', {
                 method: 'POST',
                 body: postData
             });

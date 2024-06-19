@@ -52,7 +52,7 @@ function UpdateUser() {
                 password: formData.password
             };
 
-            const response = await fetch(`https://gourav-saini.vercel.app/user/updateuser/${id}`, {
+            const response = await fetch(`https://gourav-saini-q37q.vercel.app/user/updateuser/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

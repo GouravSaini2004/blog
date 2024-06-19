@@ -22,7 +22,7 @@ function Home() {
   const fetchUsers = async () => {
     try {
       setLoading(true)
-      const response = await fetch('https://gourav-saini-q37q.vercel.app/');
+      const response = await fetch('https://gourav-saini-q37q.vercel.app');
       if (!response.ok) {
         throw new Error('Failed to fetch users');
       }

@@ -18,7 +18,7 @@ function Allblog() {
 
         try {
 
-            const response = await fetch(`http://localhost:8000/blog/allblog/${Id}`);
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/allblog/${Id}`);
 
             if (!response.ok) {
                 setLoading(false);

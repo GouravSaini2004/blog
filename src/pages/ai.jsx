@@ -8,7 +8,7 @@ const AIComponent = () => {
     const handleButtonClick = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:8000/user/ai', {
+            const response = await fetch('https://mbackend-cwzo.onrender.com/user/ai', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

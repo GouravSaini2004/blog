@@ -32,7 +32,7 @@ function UpdatePost() {
 
     const fetchPostData = async () => {
         try {
-            const response = await fetch(`https://gourav-saini-q37q.vercel.app/blog/view/${Id}`);
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/view/${Id}`);
             if (response.ok) {
                 const postData = await response.json();
                 setFormData({
@@ -65,7 +65,7 @@ function UpdatePost() {
             postData.append('file', formData.file);
             postData.append('id', id);
 
-            const response = await fetch(`http://localhost:8000/blog/updateblog/${Id}`, {
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/updateblog/${Id}`, {
 
                 method: 'PATCH',
                 body: postData,

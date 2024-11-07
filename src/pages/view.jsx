@@ -40,7 +40,7 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/blog/view/${Id}`);
+                const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/view/${Id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -62,7 +62,7 @@ function View() {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:8000');
+            const response = await fetch('https://mbackend-cwzo.onrender.com');
             if (!response.ok) {
                 throw new Error('Failed to fetch users');
             }
@@ -85,7 +85,7 @@ function View() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8000/blog/comment/${Id}`, {
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/comment/${Id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ function View() {
 
     const handleDelete = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/blog/deleteblog/${Id}`, {
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/deleteblog/${Id}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -119,7 +119,7 @@ function View() {
 
     const handleLike = () => {
         const userid = Cookies.get('_id');
-        fetch(`http://localhost:8000/blog/like/${Id}`, {
+        fetch(`https://mbackend-cwzo.onrender.com/blog/like/${Id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -133,12 +133,12 @@ function View() {
 
     const handleHistory = (userid) => {
         navigate(`/view/${userid}`);
-        fetch(`http://localhost:8000/user/history/${userid}`, {
+        fetch(`https://mbackend-cwzo.onrender.com/user/history/${userid}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ additionalVariable: Id })
         });
-        fetch(`http://localhost:8000/blog/count/${userid}`, {
+        fetch(`https://mbackend-cwzo.onrender.com/blog/count/${userid}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ function View() {
     useEffect(() => {
         const fetchLikeCount = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/blog/like/${Id}`);
+                const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/like/${Id}`);
                 if (response.ok) {
                     const data = await response.json()
                     setLike(data.count);
@@ -171,7 +171,7 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/blog/count/${Id}`);
+                const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/count/${Id}`);
                 const result = await response.json();
                 setCount(result.count);
             } catch (e) {

@@ -24,7 +24,7 @@ function Signin() {
         console.log("button clicked")
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:8000/user/signup', {
+            const response = await fetch('https://mbackend-cwzo.onrender.com/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

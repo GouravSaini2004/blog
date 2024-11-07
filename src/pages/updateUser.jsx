@@ -53,7 +53,7 @@ function UpdateUser() {
             };
 
 
-            const response = await fetch(`http://localhost:8000/user/updateuser/${id}`, {
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/user/updateuser/${id}`, {
 
                 method: 'PATCH',
                 headers: {

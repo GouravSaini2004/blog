@@ -1,18 +1,26 @@
 import Cookies from "js-cookie";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { login } from "../slice/loginSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Home() {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-  const auth = useSelector((state) => state.auth.isAuthenticated);
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const Id = storedUser && storedUser._id
+  if(storedUser){
+    dispatch(login());
+  }
+
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+  
 
   // Fetch users
   useEffect(() => {
@@ -23,7 +31,7 @@ function Home() {
     try {
 
       setLoading(true);
-      const response = await fetch('http://localhost:8000');
+      const response = await fetch('https://mbackend-cwzo.onrender.com');
 
       if (!response.ok) {
         setLoading(false);
@@ -47,7 +55,7 @@ function Home() {
       additionalVariable: additionalVariable,
     };
 
-    fetch(`http://localhost:8000/user/history/${userid}`, {
+    fetch(`https://mbackend-cwzo.onrender.com/user/history/${userid}`, {
 
       method: 'POST',
       headers: {
@@ -59,7 +67,7 @@ function Home() {
       .catch(error => console.error('Error:', error));
 
 
-    fetch(`http://localhost:8000/blog/count/${userid}`, {
+    fetch(`https://mbackend-up7l.onrender.com/blog/count/${userid}`, {
 
       method: 'POST',
       headers: {
@@ -76,7 +84,8 @@ function Home() {
   return (
     <>
       {/* If user is authenticated */}
-      {auth && (
+       {auth && 
+      ( 
         <div className="h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-y-auto">
           <div className="grid grid-cols-12 gap-4 p-4">
             {users.map((user) => (
@@ -97,7 +106,8 @@ function Home() {
             ))}
           </div>
         </div>
-      )}
+       )
+      } 
 
       {/* If user is not authenticated */}
       

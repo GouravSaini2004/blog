@@ -18,7 +18,7 @@ function History() {
         try {
 
             setLoading(true);
-            const response = await fetch(`http://localhost:8000/user/history/${Id}`);
+            const response = await fetch(`https://mbackend-cwzo.onrender.com/user/history/${Id}`);
             if (!response.ok) {
                 setLoading(false);
                 throw new Error('Failed to fetch users');

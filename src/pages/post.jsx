@@ -46,7 +46,7 @@ function AddPost() {
             postData.append('id', id);
 
 
-            const response = await fetch('http://localhost:8000/blog/addblog', {
+            const response = await fetch('https://mbackend-cwzo.onrender.com/blog/addblog', {
 
                 method: 'POST',
                 body: postData,

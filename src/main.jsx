@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { createBrowserRouter , createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
+import { createHashRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import Home from './pages/home.jsx'
 import Signin from "./pages/signin.jsx"
 import Login from './pages/login.jsx'
@@ -18,7 +18,7 @@ import UpdatePost from './pages/update.jsx'
 import { Provider } from 'react-redux'
 import store from "./app/store.js"
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<Home />} />
@@ -33,8 +33,6 @@ const router = createBrowserRouter(
       <Route path='/allblog' element={<Allblog />} />
       <Route path='/ai' element={<AIComponent />} />
       {/* <Route path='/updateuser' element={<UpdateUser />} /> */}
-
-
     </Route>
   )
 )

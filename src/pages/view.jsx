@@ -27,7 +27,8 @@ function View() {
     const [isSharing, setIsSharing] = useState(false);
 
     useEffect(() => {
-        const id = Cookies.get('_id');
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const id = storedUser._id
         setId(id);
     }, [])
 
@@ -135,7 +136,7 @@ function View() {
         fetch(`http://localhost:8000/user/history/${userid}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ additionalVariable: Cookies.get('_id') })
+            body: JSON.stringify({ additionalVariable: Id })
         });
         fetch(`http://localhost:8000/blog/count/${userid}`, {
             method: 'POST',

@@ -12,11 +12,14 @@ function Allblog() {
     }, []);
 
     const fetchUsers = async () => {
-        const Id = Cookies.get('_id');
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const Id = storedUser._id
         setLoading(true);
 
         try {
+
             const response = await fetch(`http://localhost:8000/blog/allblog/${Id}`);
+
             if (!response.ok) {
                 setLoading(false);
                 throw new Error('Failed to fetch blogs');
@@ -69,9 +72,9 @@ function Allblog() {
                             {/* Blog Metadata */}
                             <div className="px-4 py-2">
                                 <div className="flex items-center gap-2">
-                                    <img 
-                                        src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
-                                        alt="User Icon" 
+                                    <img
+                                        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                        alt="User Icon"
                                         className="w-8 h-8 rounded-full border-2 border-gray-300"
                                     />
                                     <span className="text-sm font-semibold text-gray-700">By: {user.createdby && user.createdby.fullname}</span>

@@ -12,9 +12,11 @@ function History() {
     }, []);
 
     const fetchUsers = async () => {
-        const Id = Cookies.get('_id');
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const Id = storedUser._id
         
         try {
+
             setLoading(true);
             const response = await fetch(`http://localhost:8000/user/history/${Id}`);
             if (!response.ok) {
@@ -40,6 +42,7 @@ function History() {
             </div>
         );
     }
+
 
     return (
         <>

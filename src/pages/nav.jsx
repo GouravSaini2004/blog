@@ -11,12 +11,7 @@ function Nav() {
     const navigate = useNavigate();
 
     const logout = () => {
-        Cookies.remove('token');
-        Cookies.remove('email');
-        Cookies.remove('_id');
-        Cookies.remove('image');
-        Cookies.remove('fullname');
-        Cookies.remove('password');
+       localStorage.removeItem("user")
         navigate('/');
         window.location.reload();
         

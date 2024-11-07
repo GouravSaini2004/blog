@@ -11,6 +11,8 @@ function Home() {
   const [loading, setLoading] = useState(false);
 
   const auth = useSelector((state) => state.auth.isAuthenticated);
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const Id = storedUser && storedUser._id
 
   // Fetch users
   useEffect(() => {
@@ -19,8 +21,10 @@ function Home() {
 
   const fetchUsers = async () => {
     try {
+
       setLoading(true);
       const response = await fetch('http://localhost:8000');
+
       if (!response.ok) {
         setLoading(false);
         throw new Error('Failed to fetch users');
@@ -36,13 +40,15 @@ function Home() {
 
   // Handle user history and navigation
   const handleHistory = (userid) => {
-    const additionalVariable = Cookies.get('_id');
+    const additionalVariable = Id;
     navigate(`/view/${userid}`);
 
     const data = {
       additionalVariable: additionalVariable,
     };
+
     fetch(`http://localhost:8000/user/history/${userid}`, {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +58,9 @@ function Home() {
       .then(response => response.json())
       .catch(error => console.error('Error:', error));
 
+
     fetch(`http://localhost:8000/blog/count/${userid}`, {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,6 +69,9 @@ function Home() {
       .then(response => response.json())
       .catch(error => console.error('Error:', error));
   };
+  {!auth && (
+    navigate('/login')
+  )}
 
   return (
     <>
@@ -89,9 +100,7 @@ function Home() {
       )}
 
       {/* If user is not authenticated */}
-      {!auth && (
-           navigate('/login')
-      )}
+      
 
       {/* Loading Spinner */}
       {loading && (

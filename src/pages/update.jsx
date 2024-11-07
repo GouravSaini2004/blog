@@ -9,8 +9,9 @@ function UpdatePost() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const userId = Cookies.get('_id');
-        setId(userId);
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const Id = storedUser._id
+        setId(Id);
         // Fetch post data using postId and populate the form
         fetchPostData();
     }, []);
@@ -31,7 +32,7 @@ function UpdatePost() {
 
     const fetchPostData = async () => {
         try {
-            const response = await fetch(`https://gourav-saini.vercel.app/blog/view/${Id}`);
+            const response = await fetch(`https://gourav-saini-q37q.vercel.app/blog/view/${Id}`);
             if (response.ok) {
                 const postData = await response.json();
                 setFormData({
@@ -65,6 +66,7 @@ function UpdatePost() {
             postData.append('id', id);
 
             const response = await fetch(`http://localhost:8000/blog/updateblog/${Id}`, {
+
                 method: 'PATCH',
                 body: postData,
             });

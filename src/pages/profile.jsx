@@ -8,8 +8,10 @@ function UserProfile() {
     const [email, setEmail] = useState('');
 
     useEffect(() => {
-        setName(Cookies.get('fullname'));
-        setEmail(Cookies.get("email"));
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        
+        setName(storedUser.fullname);
+        setEmail(storedUser.email);
     }, []);
 
     return (

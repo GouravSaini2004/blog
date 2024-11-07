@@ -52,7 +52,9 @@ function UpdateUser() {
                 password: formData.password
             };
 
+
             const response = await fetch(`http://localhost:8000/user/updateuser/${id}`, {
+
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

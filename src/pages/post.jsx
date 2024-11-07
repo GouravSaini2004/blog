@@ -7,7 +7,8 @@ function AddPost() {
     const [id, setId] = useState('');
 
     useEffect(() => {
-        const id = Cookies.get('_id');
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const id = storedUser._id
         setId(id);
     }, []);
 
@@ -44,7 +45,9 @@ function AddPost() {
             postData.append('file', formData.file);
             postData.append('id', id);
 
+
             const response = await fetch('http://localhost:8000/blog/addblog', {
+
                 method: 'POST',
                 body: postData,
             });

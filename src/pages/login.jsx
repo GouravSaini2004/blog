@@ -41,11 +41,7 @@ function Login() {
                 const data = await response.json();
                 const user = data.user;
 
-                Cookies.set('_id', user._id);
-                Cookies.set('fullname', user.fullname);
-                Cookies.set('email', user.email);
-                Cookies.set('image', user.profileimageurl);
-                Cookies.set('password', user.password);
+                localStorage.setItem("user", JSON.stringify(user));
                 dispatch(login());
                 navigate('/');
             } else {

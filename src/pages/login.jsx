@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { login } from "../slice/loginSlice"
-import Cookies from "js-cookie"
+import { login } from "../slice/loginSlice";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-// import { Cookies } from 'universal-cookie';
 
 function Login() {
-    // const cookies = new Cookies();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -28,98 +26,108 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // console.log("button click")
-        // console.log(formData)
-
         try {
             setLoading(true);
-            const response = await fetch('https://gourav-saini.vercel.app/user/signin', {
+            const response = await fetch('http://localhost:8000/user/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
+
             if (response.status === 200) {
-                // console.log(response.value)
-                setLoading(false)
-                //    console.log(response.status)                
+                setLoading(false);
                 const data = await response.json();
-                const user = data.user
-               
-                // console.log(user);
-                Cookies.set('_id', user._id)
-                // console.log(Cookies.get('user'))
-                Cookies.set('fullname', user.fullname)
-                Cookies.set('email', user.email)
-                Cookies.set('image', user.profileimageurl)
-                Cookies.set('password', user.password)
-                dispatch(login())
-                navigate('/')
+                const user = data.user;
 
+                Cookies.set('_id', user._id);
+                Cookies.set('fullname', user.fullname);
+                Cookies.set('email', user.email);
+                Cookies.set('image', user.profileimageurl);
+                Cookies.set('password', user.password);
+                dispatch(login());
+                navigate('/');
             } else {
-                setLoading(false)
-                setError("Something went wrong. Please try again.")
-                console.log("data not fetched:")
+                setLoading(false);
+                setError("Invalid email or password");
+                console.log("data not fetched:");
             }
-
-
         } catch (error) {
-            setLoading(false)
+            setLoading(false);
+            setError("Something went wrong. Please try again.");
             console.error('Error:', error);
+        } finally {
+            setLoading(false);
         }
-        finally {
-            setLoading(false)
-        }
-
     };
 
-    if(!error.length==0){
-        return(
-            <>
-               {
-                navigate("/error")
-               }
-            </>
-        )
-    }
-
     return (
-        <>
-            <div className="h-screen">
-                <div className="m-2 flex justify-center content-center h-full ">
-                    <div className=" m-auto grid-cols-12 border-2 rounded-xl mt-16 border-gray-400">
-                        <form onSubmit={handleSubmit}>
-                            <h1 className="text-black font-bold text-2xl mt-3 underline">Login  Form</h1>
+        <div className="flex h-screen bg-gray-100">
+            {/* Side image */}
+            <div className="hidden md:block md:w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg')" }}></div>
 
-                            <div className="m-3">
-                                <label className="m-3 text-xl block" htmlFor="email">Email</label>
-                                <input className="rounded bg-slate-400 w-72 h-10 text-black pl-2" type="text" value={formData.email}
-                                    onChange={handleChange} name="email" id="email" />
-                            </div>
-                            <div className="m-3">
-                                <label className="m-3 text-xl block self-start" htmlFor="password">Passowrd</label>
-                                <input className="rounded bg-slate-400 w-72 h-10 text-black pl-2" type="text" value={formData.password}
-                                    onChange={handleChange} name="password" id="password" />
-                            </div>
-                            <div className="flex justify-end m-3 mr-10">
-                                <a className="text-blue-800 underline" href="#">forget Password</a>
-                            </div>
-                            <button type="submit" className="bg-blue-800 rounded-xl h-10 w-20 text-white hover:bg-white hover:text-blue-800 font-semibold mb-5 ">Submit</button>
-                            <div className="m-3 mb-5">
-                                <Link to={'/signup'}>If you have not account, click hear <span className="text-blue-800 underline">Create Account</span></Link>
-                            </div>
+            {/* Form Container */}
+            <div className="w-full md:w-1/2 flex justify-center items-center bg-white p-6 md:p-12">
+                <div className="w-full max-w-md p-8 rounded-xl shadow-lg bg-gray-50">
+                    <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Login Form</h1>
 
-                        </form>
-                    </div>
+                    {/* Error Message */}
+                    {error && <div className="bg-red-200 text-red-800 p-3 rounded mb-4">{error}</div>}
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label htmlFor="email" className="block text-xl text-gray-700 mb-2">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label htmlFor="password" className="block text-xl text-gray-700 mb-2">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                        </div>
+
+                        <div className="flex justify-end mb-4">
+                            <a className="text-blue-800 underline" href="#">Forgot Password?</a>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+                        >
+                            {loading ? 'Logging in...' : 'Log In'}
+                        </button>
+
+                        <div className="mt-4 text-center">
+                            <p className="text-gray-600">Don't have an account? <Link to="/signup" className="text-blue-600 hover:text-blue-800 font-medium">Create Account</Link></p>
+                        </div>
+                    </form>
                 </div>
-                {loading && <div className="absolute inset-0 bg-black opacity-50 flex justify-center items-center">
-                    <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
-                </div>}
             </div>
-        </>
-    )
+
+            {/* Loading Spinner */}
+            {loading && (
+                <div className="absolute inset-0 bg-black opacity-50 flex justify-center items-center">
+                    <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default Login;

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 function UpdatePost() {
     const [loading, setLoading] = useState(false);
     const [id, setId] = useState('');
-    const {Id } = useParams(); // Assuming your route includes the postId parameter
+    const { Id } = useParams(); // Assuming your route includes the postId parameter
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,14 +18,14 @@ function UpdatePost() {
     const [formData, setFormData] = useState({
         title: '',
         body: '',
-        file: null
+        file: null,
     });
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         setFormData({
             ...formData,
-            [name]: name === 'file' ? files[0] : value
+            [name]: name === 'file' ? files[0] : value,
         });
     };
 
@@ -37,9 +37,8 @@ function UpdatePost() {
                 setFormData({
                     title: postData.blog.title,
                     body: postData.blog.body,
-                    file: postData.blog.coverimage // Assuming the cover image URL is returned from the server
+                    file: postData.blog.coverimage, // Assuming the cover image URL is returned from the server
                 });
-                // console.log(formData)
             } else {
                 console.error('Failed to fetch post data');
             }
@@ -52,6 +51,12 @@ function UpdatePost() {
         e.preventDefault();
         setLoading(true);
 
+        if (!formData.title || !formData.body) {
+            alert('Title and Body are required!');
+            setLoading(false);
+            return;
+        }
+
         try {
             const postData = new FormData();
             postData.append('title', formData.title);
@@ -59,9 +64,9 @@ function UpdatePost() {
             postData.append('file', formData.file);
             postData.append('id', id);
 
-            const response = await fetch(`https://gourav-saini.vercel.app/blog/updateblog/${Id}`, {
+            const response = await fetch(`http://localhost:8000/blog/updateblog/${Id}`, {
                 method: 'PATCH',
-                body: postData
+                body: postData,
             });
 
             if (response.ok) {
@@ -79,49 +84,71 @@ function UpdatePost() {
     };
 
     return (
-        <div className="h-screen">
-            <div className="m-2 flex justify-center content-center h-full">
-                <div className="m-auto grid-cols-12 border-2 rounded-xl mt-16 border-gray-400">
-                    <form onSubmit={handleSubmit}>
-                        <h1 className="text-black font-bold text-2xl mt-3">Update Post</h1>
-                        <div className="m-3">
-                            <label htmlFor="title" className="m-3 text-xl block">Title</label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                                className="rounded bg-slate-400 w-72 h-10 text-black pl-2"
-                            />
-                        </div>
-                        <div className="m-3">
-                            <label htmlFor="body" className="m-3 text-xl block">Body</label>
-                            <textarea
-                                id="body"
-                                name="body"
-                                value={formData.body}
-                                onChange={handleChange}
-                                className="rounded bg-slate-400 w-72 h-32 text-black pl-2"
-                            />
-                        </div>
-                        <div className="m-3">
-                            <label htmlFor="file" className="m-3 text-xl block">File</label>
-                            <input
-                                type="file"
-                                id="file"
-                                name="file"
-                                onChange={handleChange}
-                                className="rounded bg-slate-400 w-72 h-10 text-black pl-2"
-                            />
-                        </div>
-                        <button type="submit" className="bg-blue-800 rounded-xl h-10 w-20 text-white hover:bg-white hover:text-blue-800 font-semibold mb-5">Update</button>
-                    </form>
-                </div>
+        <div className="min-h-screen flex justify-center items-center bg-gray-100">
+            <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+                <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Update Post</h1>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Title Input */}
+                    <div>
+                        <label htmlFor="title" className="block text-lg font-medium text-gray-700">Title</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            required
+                            className="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter title"
+                        />
+                    </div>
+
+                    {/* Body Input */}
+                    <div>
+                        <label htmlFor="body" className="block text-lg font-medium text-gray-700">Body</label>
+                        <textarea
+                            id="body"
+                            name="body"
+                            value={formData.body}
+                            onChange={handleChange}
+                            required
+                            className="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter body content"
+                            rows="6"
+                        />
+                    </div>
+
+                    {/* Image File Input */}
+                    <div>
+                        <label htmlFor="file" className="block text-lg font-medium text-gray-700">Cover Image (Optional)</label>
+                        <input
+                            type="file"
+                            id="file"
+                            name="file"
+                            accept="image/*"
+                            onChange={handleChange}
+                            className="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="flex justify-center">
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
+                            disabled={loading}
+                        >
+                            {loading ? 'Updating...' : 'Update Post'}
+                        </button>
+                    </div>
+                </form>
+
+                {loading && (
+                    <div className="absolute inset-0 bg-black opacity-50 flex justify-center items-center">
+                        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
+                    </div>
+                )}
             </div>
-            {loading && <div className="absolute inset-0 bg-black opacity-50 flex justify-center items-center">
-                <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
-            </div>}
         </div>
     );
 }

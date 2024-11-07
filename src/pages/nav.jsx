@@ -33,9 +33,9 @@ function Nav() {
         <nav className="bg-gray-800 h-14 sticky z-50 top-0">
             <div className="relative flex justify-between">
                 <div className="flex">
-                    <ul className="hidden md:flex md:justify-between md:w-72 md:mt-4 md:ml-7">
+                    <ul className="hidden md:flex md:justify-between md:w-96 md:mt-4 md:ml-7">
                         <li className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md text-sm font-medium">
-                            <img src="https://logo.com/image-cdn/images/kts928pd/production/28563b4f836c667b30238865f796aeb03ae702db-358x357.png?w=1080&q=72" alt="" width={40} height={40} />
+                            <img src="https://cdn.logojoy.com/wp-content/uploads/2018/05/30164225/572-768x591.png" alt="" width={40} height={40} />
                         </li>
                         <li className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md text-sm font-medium">
                             <Link to='/'>Home</Link>
@@ -58,6 +58,9 @@ function Nav() {
                                 <li className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md text-sm font-medium">
                                     <Link to='/allblog'>All post</Link>
                                 </li>
+                                <li className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md text-sm font-medium">
+                                    <Link to='/ai'>Genrative AI</Link>
+                                </li>
                             </>
                         )}
                     </ul>
@@ -68,18 +71,19 @@ function Nav() {
                                 {!auth && (
                                     <>
                                         <div className={`dropdown-content bg-black absolute w-32 rounded-lg h-32 -right-22 ${cla2}`}>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/'>Home</Link>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/Signup'>Signin</Link>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/Login'>login</Link>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/'>Home</Link>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/Signup'>Signin</Link>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/Login'>login</Link>
                                         </div>
                                     </>
                                 )}
                                 {auth && (
                                     <>
-                                        <div className={`dropdown-content bg-black absolute w-32 rounded-lg h-32 -right-22 ${cla2}`}>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/'>Home</Link>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/post'>Add post</Link>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/allblog'>All post</Link>
+                                        <div className={`dropdown-content bg-black absolute w-32 rounded-lg h-40 -right-22 ${cla2}`}>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/'>Home</Link>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/post'>Add post</Link>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/allblog'>All post</Link>
+                                            <Link onClick={() => toggleDropdown(setCla2)} className="text-white block mt-3 hover:bg-slate-800" to='/ai'>Genrative AI</Link>
                                         </div>
                                     </>
                                 )}
@@ -94,10 +98,10 @@ function Nav() {
                                 <li>
                                     <div className="dropdown relative inline-block">
                                         <button onClick={() => toggleDropdown(setCla)} className="dropbtn cursor-pointer"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width={40} height={40} alt="" /></button>
-                                        <div className={`dropdown-content bg-black absolute w-32 rounded-lg -left-20 h-40 ${cla}`}>
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/profile'>Profile</Link>
+                                        <div className={`dropdown-content bg-black absolute w-32 rounded-lg -left-20 h-32 ${cla}`}>
+                                            <Link onClick={() => toggleDropdown(setCla)} className="text-white block mt-3 hover:bg-slate-800" to='/profile'>Profile</Link>
                                             {/* <Link className="text-white block mt-3 hover:bg-slate-800">Setting</Link> */}
-                                            <Link className="text-white block mt-3 hover:bg-slate-800" to='/history'>History</Link>
+                                            <Link onClick={() => toggleDropdown(setCla)} className="text-white block mt-3 hover:bg-slate-800" to='/history'>History</Link>
                                             <button onClick={logout}className="text-white block mt-3 hover:bg-slate-800 ml-10">Logout</button>
                                         </div>
                                     </div>

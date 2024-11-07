@@ -2,49 +2,52 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 
-
 function UserProfile() {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+
     useEffect(() => {
-        setName(Cookies.get('fullname'))
-        setEmail(Cookies.get("email"))
-    }, [])
+        setName(Cookies.get('fullname'));
+        setEmail(Cookies.get("email"));
+    }, []);
 
-    // const handleUpdate = () =>{
-    //      navigate("/updateuser");
-    // }
     return (
-        <>
-            <div className="h-screen">
-                <div className="m-2 flex justify-center content-center h-full ">
-                    <div className=" m-auto grid-cols-12 border-2 w-[300px] md:w-[500px] rounded-xl mt-16 border-gray-400">
-                        <h1 className="text-black font-bold text-2xl mt-3 underline">User Profile</h1>
-                        <div className='m-3'>
-                            <div className='inline-block m-3'>
-                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" width={150} height={150} />
-                            </div>
-                            <div className=' m-3'>
-                                <p>Name</p>
-                                <p className='text-xl border-2 border-gray-400 rounded-xl'>{name}</p>
-                            </div>
-                            <div className='m-3 mt-5'>
-                                <p>Email</p>
-                                <p className='text-xl border-2 border-gray-400 rounded-xl'>{email}</p>
-                            </div>
-                            <div className='mt-3 m-3'>
-                                <button className= ' m-2 bg-blue-800 text-white rounded-lg h-10 w-20'>Update</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </>
+        <div className="min-h-screen bg-gray-100 flex justify-center items-center">
+            <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-lg">
+                <h1 className="text-3xl font-bold text-center text-gray-800 mb-6 underline">{name} Profile</h1>
 
+                <div className="flex flex-col items-center">
+                    {/* Profile Image */}
+                    <img
+                        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                        alt="Profile"
+                        className="w-36 h-36 object-cover rounded-full mb-4"
+                    />
+
+                    {/* Name */}
+                    <div className="w-full mb-4">
+                        <p className="text-lg font-medium text-gray-700">Name</p>
+                        <p className="text-xl text-gray-800 p-3 border-2 border-gray-300 rounded-xl">{name}</p>
+                    </div>
+
+                    {/* Email */}
+                    <div className="w-full mb-6">
+                        <p className="text-lg font-medium text-gray-700">Email</p>
+                        <p className="text-xl text-gray-800 p-3 border-2 border-gray-300 rounded-xl">{email}</p>
+                    </div>
+
+                    {/* Update Button */}
+                    <button
+                        onClick={() => navigate('/updateuser')}
+                        className="bg-blue-800 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 w-full sm:w-auto"
+                    >
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }
-
 
 export default UserProfile;

@@ -12,6 +12,7 @@ import ErrorComponent from './pages/error.jsx'
 import History from './pages/history.jsx'
 import Allblog from './pages/allblog.jsx'
 import UserProfile from './pages/profile.jsx'
+import AIComponent from './pages/ai.jsx'
 // import UpdateUser from './pages/updateUser.jsx'
 import UpdatePost from './pages/update.jsx'
 import { Provider } from 'react-redux'
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path='/profile' element={<UserProfile />} />
       <Route path='/history' element={<History />} />
       <Route path='/allblog' element={<Allblog />} />
+      <Route path='/ai' element={<AIComponent />} />
       {/* <Route path='/updateuser' element={<UpdateUser />} /> */}
 
 

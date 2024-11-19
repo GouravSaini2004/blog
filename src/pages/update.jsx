@@ -7,6 +7,7 @@ function UpdatePost() {
     const [id, setId] = useState('');
     const { Id } = useParams(); // Assuming your route includes the postId parameter
     const navigate = useNavigate();
+    const url = "https://mbackend-cwzo.onrender.com"
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -32,13 +33,13 @@ function UpdatePost() {
 
     const fetchPostData = async () => {
         try {
-            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/view/${Id}`);
+            const response = await fetch(`${url}/blog/view/${Id}`);
             if (response.ok) {
                 const postData = await response.json();
                 setFormData({
                     title: postData.blog.title,
                     body: postData.blog.body,
-                    file: postData.blog.coverimage, // Assuming the cover image URL is returned from the server
+                    file: postData.blog.image, // Assuming the cover image URL is returned from the server
                 });
             } else {
                 console.error('Failed to fetch post data');
@@ -65,7 +66,7 @@ function UpdatePost() {
             postData.append('file', formData.file);
             postData.append('id', id);
 
-            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/updateblog/${Id}`, {
+            const response = await fetch(`${url}/blog/updateblog/${Id}`, {
 
                 method: 'PATCH',
                 body: postData,

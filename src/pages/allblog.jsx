@@ -6,6 +6,7 @@ function Allblog() {
     const [blog, setBlog] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const url = "https://mbackend-cwzo.onrender.com"
 
     useEffect(() => {
         fetchUsers();
@@ -18,7 +19,7 @@ function Allblog() {
 
         try {
 
-            const response = await fetch(`https://mbackend-cwzo.onrender.com/blog/allblog/${Id}`);
+            const response = await fetch(`${url}/blog/allblog/${Id}`);
 
             if (!response.ok) {
                 setLoading(false);
@@ -60,7 +61,7 @@ function Allblog() {
                                     {/* Image Section */}
                                     <img
                                         className="w-full h-48 object-cover"
-                                        src={user.coverimage || 'https://via.placeholder.com/150'}
+                                        src={user.image || 'https://via.placeholder.com/150'}
                                         alt="Blog Post"
                                         onError={(e) => e.target.src = 'https://via.placeholder.com/150'}
                                     />
@@ -77,7 +78,7 @@ function Allblog() {
                                         alt="User Icon"
                                         className="w-8 h-8 rounded-full border-2 border-gray-300"
                                     />
-                                    <span className="text-sm font-semibold text-gray-700">By: {user.createdby && user.createdby.fullname}</span>
+                                    <span className="text-sm font-semibold text-gray-700">By: {user.user && user.user.fullname}</span>
                                 </div>
                             </div>
                         </div>

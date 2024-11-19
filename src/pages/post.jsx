@@ -19,6 +19,7 @@ function AddPost() {
         body: '',
         file: null,
     });
+    const url = "https://mbackend-cwzo.onrender.com"
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -46,7 +47,7 @@ function AddPost() {
             postData.append('id', id);
 
 
-            const response = await fetch('https://mbackend-cwzo.onrender.com/blog/addblog', {
+            const response = await fetch(`${url}/blog/addblog`, {
 
                 method: 'POST',
                 body: postData,

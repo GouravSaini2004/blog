@@ -2,19 +2,26 @@ import { useState } from "react";
 import React from "react";
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { logout } from '../slice/loginSlice';
+import { useDispatch } from "react-redux";
+import { logout,login } from '../slice/loginSlice';
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 function Nav() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+        dispatch(login());
+    }
 
     const logout = () => {
-       localStorage.removeItem("user")
+        localStorage.removeItem("user")
         navigate('/');
         window.location.reload();
-        
+
     }
     const auth = useSelector((state) => state.auth.isAuthenticated)
     const [cla, setCla] = useState("hidden");
@@ -97,7 +104,7 @@ function Nav() {
                                             <Link onClick={() => toggleDropdown(setCla)} className="text-white block mt-3 hover:bg-slate-800" to='/profile'>Profile</Link>
                                             {/* <Link className="text-white block mt-3 hover:bg-slate-800">Setting</Link> */}
                                             <Link onClick={() => toggleDropdown(setCla)} className="text-white block mt-3 hover:bg-slate-800" to='/history'>History</Link>
-                                            <button onClick={logout}className="text-white block mt-3 hover:bg-slate-800 ml-10">Logout</button>
+                                            <button onClick={logout} className="text-white block mt-3 hover:bg-slate-800 ml-10">Logout</button>
                                         </div>
                                     </div>
                                 </li>

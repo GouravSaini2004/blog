@@ -12,6 +12,7 @@ function Home() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const url = "https://mbackend-cwzo.onrender.com"
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const Id = storedUser && storedUser._id
@@ -31,7 +32,7 @@ function Home() {
     try {
 
       setLoading(true);
-      const response = await fetch('https://mbackend-cwzo.onrender.com');
+      const response = await fetch(`${url}`);
 
       if (!response.ok) {
         setLoading(false);
@@ -39,6 +40,7 @@ function Home() {
       }
       const data = await response.json();
       setUsers(data);
+      // console.log(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -46,37 +48,45 @@ function Home() {
     }
   };
 
-  // Handle user history and navigation
-  const handleHistory = (userid) => {
-    const additionalVariable = Id;
-    navigate(`/view/${userid}`);
+  const handleView = async (id) => {
+    const additionalVariable = id; // Assuming id is the postId
+    console.log("Handling view for post ID:", additionalVariable);
+  
+    // First fetch to update blog views
+    const response = await fetch(`${url}/blog/count/${id}`);
+    if (!response.ok) {
+      console.error("Error updating blog views");
+      navigate('/');
+      return; // Stop further execution if first fetch fails
+    }
+    const data = await response.json();
+    console.log("Blog view update response:");
 
-    const data = {
-      additionalVariable: additionalVariable,
-    };
-
-    fetch(`https://mbackend-cwzo.onrender.com/user/history/${userid}`, {
-
+     // Second fetch to update user history
+     const respons = await fetch(`${url}/user/history/${Id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .catch(error => console.error('Error:', error));
-
-
-    fetch(`https://mbackend-up7l.onrender.com/blog/count/${userid}`, {
-
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .catch(error => console.error('Error:', error));
-  };
+      body: JSON.stringify({ postId: additionalVariable }), // Sending postId as body
+    });
+    console.log(respons)
+  
+    // Check if the second request was successful
+    if (respons.ok) {
+      const data1 = await respons.json();
+      console.log("History updated successfully:");
+      navigate(`/view/${id}`); // Navigate to the view page if both requests succeed
+    } else {
+      // Log the error if the history update failed
+      const error = await respons.json();
+      console.error("Error updating history:", error);
+      navigate('/'); // Navigate to a fallback page on failure
+    }
+  
+    
+  }
+  
   {!auth && (
     navigate('/login')
   )}
@@ -87,17 +97,17 @@ function Home() {
        {auth && 
       ( 
         <div className="h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-y-auto">
-          <div className="grid grid-cols-12 gap-4 p-4">
+          <div className="grid grid-cols-12 p-4">
             {users.map((user) => (
               <div key={user._id} className="lg:col-span-3 md:col-span-4 sm:col-span-6 col-span-12 p-3">
-                <button onClick={() => handleHistory(user._id)}>
+                <button onClick={() => handleView(user._id)}>
                   <div className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105">
-                    <img className="w-full h-44 object-cover" src={`${user.coverimage}`} alt="User cover" onError={() => setError('Failed to load image')} />
+                    <img className="w-full h-44 object-cover" src={`${user.image}`} alt="User cover" onError={() => setError('Failed to load image')} />
                     <div className="px-4 py-2 flex items-center gap-2">
                       <img className="w-10 h-10 rounded-full" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User avatar" />
                       <div>
                         <div className="font-semibold text-lg text-gray-800 text-start">{user.title}</div>
-                        <div className="text-sm text-gray-800 text-start">{user.createdby && user.createdby.fullname}</div>
+                        <div className="text-sm text-gray-800 text-start">{user.user && user.user.fullname}</div>
                       </div>
                     </div>
                   </div>

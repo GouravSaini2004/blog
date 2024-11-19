@@ -10,6 +10,7 @@ function Signin() {
         email: '',
         password: ''
     });
+    const [auth, setauth] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,6 +19,12 @@ function Signin() {
             [name]: value
         });
     };
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        
+        if(storedUser) setauth(true);
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -49,6 +56,10 @@ function Signin() {
             console.error('Error:', error);
         }
     };
+
+    if(auth){
+        navigate('/')
+    }
 
     return (
         <div className="flex h-screen bg-gray-100">

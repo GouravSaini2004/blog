@@ -6,6 +6,7 @@ function History() {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const url = "https://mbackend-cwzo.onrender.com"
 
     useEffect(() => {
         fetchUsers();
@@ -18,15 +19,15 @@ function History() {
         try {
 
             setLoading(true);
-            const response = await fetch(`https://mbackend-cwzo.onrender.com/user/history/${Id}`);
+            const response = await fetch(`${url}/user/history/${Id}`);
             if (!response.ok) {
                 setLoading(false);
                 throw new Error('Failed to fetch users');
             }
 
             const data = await response.json();
-            console.log(data);
-            setUsers(data);
+            console.log(data.viewHistory);
+            setUsers(data.viewHistory);
             setLoading(false);
         } catch (error) {
             setError('Failed to fetch users. Please try again later.');
@@ -57,17 +58,17 @@ function History() {
                 {/* History Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {users.map(user => (
-                        <div key={user._id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                            <Link to={`/view/${user.blogId && user.blogId._id}`} className="block">
+                        <div key={user.postId._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                            <Link to={`/view/${user.postId && user.postId._id}`} className="block">
                                 <div className="relative">
                                     <img 
                                         className="w-full h-44 object-cover" 
-                                        src={user.blogId && user.blogId.coverimage || 'https://via.placeholder.com/150'} 
+                                        src={user.postId && user.postId.image || 'https://via.placeholder.com/150'} 
                                         alt="Blog cover" 
                                         onError={(e) => e.target.src = 'https://via.placeholder.com/150'}
                                     />
                                     <div className="absolute top-0 left-0 bg-gradient-to-t from-black via-transparent to-transparent p-2 text-white">
-                                        <div className="text-lg font-bold">{user.blogId && user.blogId.title}</div>
+                                        <div className="text-lg font-bold">{user.postId && user.postId.title}</div>
                                     </div>
                                 </div>
                                 <div className="px-4 py-3">
@@ -77,7 +78,7 @@ function History() {
                                             alt="User Icon" 
                                             className="w-8 h-8 rounded-full border-2 border-gray-300"
                                         />
-                                        <div className="text-sm font-semibold text-gray-800"> {user.blogId && user.blogId.title}</div>
+                                        <div className="text-sm font-semibold text-gray-800"> {user.postId && user.postId.content}</div>
                                     </div>
                                 </div>
                             </Link>

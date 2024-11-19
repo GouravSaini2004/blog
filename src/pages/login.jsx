@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { login } from "../slice/loginSlice";
@@ -10,6 +10,7 @@ function Login() {
     const dispatch = useDispatch();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [auth, setauth] = useState(false)
 
     const [formData, setFormData] = useState({
         email: '',
@@ -23,6 +24,12 @@ function Login() {
             [name]: value
         });
     };
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        
+        if(storedUser) setauth(true);
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,6 +64,10 @@ function Login() {
             setLoading(false);
         }
     };
+
+    if(auth){
+        navigate('/')
+    }
 
     return (
         <div className="flex h-screen bg-gray-100">
